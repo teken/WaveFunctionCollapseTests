@@ -1,0 +1,5 @@
+{
+    "rust-analyzer.linkedProjects": [
+        ".\\wfc_2d\\Cargo.toml"
+    ]
+}
