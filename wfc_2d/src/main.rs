@@ -7,8 +7,6 @@ fn main() {
     println!("WFC 2D");
 
     println!("{}", wfc());
-    println!("{}", wfc());
-    println!("{}", wfc());
 }
 
 fn wfc() -> String {
@@ -33,7 +31,7 @@ fn wfc() -> String {
                 bottom_connections: bottom_con.clone(),
                 left_connections: left_bla.clone(),
                 right_connections: right_bla.clone(),
-                ..Default::default()
+                weight: 1.0,
             },
         ),
         (
@@ -44,7 +42,7 @@ fn wfc() -> String {
                 bottom_connections: bottom_bla.clone(),
                 left_connections: left_con.clone(),
                 right_connections: right_con.clone(),
-                ..Default::default()
+                weight: 1.0,
             },
         ),
         (
@@ -55,7 +53,7 @@ fn wfc() -> String {
                 bottom_connections: bottom_con.clone(),
                 left_connections: left_bla.clone(),
                 right_connections: right_con.clone(),
-                ..Default::default()
+                weight: 1.0,
             },
         ),
         (
@@ -66,7 +64,7 @@ fn wfc() -> String {
                 bottom_connections: bottom_con.clone(),
                 left_connections: left_con.clone(),
                 right_connections: right_bla.clone(),
-                ..Default::default()
+                weight: 1.0,
             },
         ),
         (
@@ -77,7 +75,7 @@ fn wfc() -> String {
                 bottom_connections: bottom_con.clone(),
                 left_connections: left_con.clone(),
                 right_connections: right_con.clone(),
-                ..Default::default()
+                weight: 1.0,
             },
         ),
         (
@@ -88,7 +86,7 @@ fn wfc() -> String {
                 bottom_connections: bottom_bla.clone(),
                 left_connections: left_con.clone(),
                 right_connections: right_con.clone(),
-                ..Default::default()
+                weight: 1.0,
             },
         ),
         (
@@ -99,7 +97,7 @@ fn wfc() -> String {
                 bottom_connections: bottom_con.clone(),
                 left_connections: left_con.clone(),
                 right_connections: right_con.clone(),
-                ..Default::default()
+                weight: 1.0,
             },
         ),
         (
@@ -110,7 +108,7 @@ fn wfc() -> String {
                 bottom_connections: bottom_bla.clone(),
                 left_connections: left_bla.clone(),
                 right_connections: right_con.clone(),
-                ..Default::default()
+                weight: 1.0,
             },
         ),
         (
@@ -121,7 +119,7 @@ fn wfc() -> String {
                 bottom_connections: bottom_bla.clone(),
                 left_connections: left_con.clone(),
                 right_connections: right_bla.clone(),
-                ..Default::default()
+                weight: 1.0,
             },
         ),
         (
@@ -132,7 +130,7 @@ fn wfc() -> String {
                 bottom_connections: bottom_con.clone(),
                 left_connections: left_bla.clone(),
                 right_connections: right_con.clone(),
-                ..Default::default()
+                weight: 1.0,
             },
         ),
         (
@@ -143,7 +141,7 @@ fn wfc() -> String {
                 bottom_connections: bottom_con.clone(),
                 left_connections: left_con.clone(),
                 right_connections: right_bla.clone(),
-                ..Default::default()
+                weight: 1.0,
             },
         ),
         (
@@ -154,73 +152,13 @@ fn wfc() -> String {
                 bottom_connections: bottom_bla.clone(),
                 left_connections: left_bla.clone(),
                 right_connections: right_bla.clone(),
-                ..Default::default()
+                weight: 0.6,
             },
         ),
     ]);
 
-    // let top_con = vec![0, 2];
-    // let top_bla = vec![1];
-
-    // let bottom_con = vec![0, 2];
-    // let bottom_bla = vec![1];
-
-    // let left_con = vec![1, 2];
-    // let left_bla = vec![0, 2];
-
-    // let right_con = vec![1, 2];
-    // let right_bla = vec![0, 2];
-
-    // let tiles: HashMap<u32, Tile> = HashMap::from([
-    //     (
-    //         0,
-    //         Tile {
-    //             character: '║',
-    //             top_connections: top_con.clone(),
-    //             bottom_connections: bottom_con.clone(),
-    //             left_connections: left_bla.clone(),
-    //             right_connections: right_bla.clone(),
-    //             weight: 0.5,
-    //         },
-    //     ),
-    //     (
-    //         1,
-    //         Tile {
-    //             character: '═',
-    //             top_connections: top_bla.clone(),
-    //             bottom_connections: bottom_bla.clone(),
-    //             left_connections: left_con.clone(),
-    //             right_connections: right_con.clone(),
-    //             weight: 0.5,
-    //         },
-    //     ),
-    //     (
-    //         2,
-    //         Tile {
-    //             character: '╬',
-    //             top_connections: top_con.clone(),
-    //             bottom_connections: bottom_con.clone(),
-    //             left_connections: left_con.clone(),
-    //             right_connections: right_con.clone(),
-    //             weight: 0.5,
-    //         },
-    //     ),
-    // ]);
-
-    const GRID_SIZE: usize = 9;
+    const GRID_SIZE: usize = 38;
     const TILE_COUNT: usize = 12;
-
-    // fresh code
-
-    let mut output = "".to_string();
-
-    // gen grid
-    // clone grid
-    // get random position
-    // set to random tile
-    // add tiles surroundit it to the stack for propergation processing
-    // for each stack item, look at the 4 cells around it limit its options based on thoes for cells
-    // if stack item changed add the 4 cells around it to the stack
 
     const EMPTY: Vec<u32> = vec![];
     let mut grid: [Vec<u32>; GRID_SIZE * GRID_SIZE] = [EMPTY; GRID_SIZE * GRID_SIZE];
@@ -229,15 +167,32 @@ fn wfc() -> String {
         grid[i] = (0..TILE_COUNT as u32).collect();
     }
 
+    let grid_clone = grid.clone();
     let mut grid_loop_clone;
+    let mut grid_loop_clone_use = 0;
     let mut rng = rand::thread_rng();
 
     'main: while grid.iter().any(|x| x.len() > 1) {
         grid_loop_clone = grid.clone();
+        if grid_loop_clone_use > 100 {
+            grid = grid_clone.clone();
+            grid_loop_clone_use = 0;
+            continue;
+        }
         let mut stack: VecDeque<usize> = VecDeque::new();
 
         {
-            let rand_pos = rng.gen_range(0..GRID_SIZE * GRID_SIZE);
+            let mut i = -1;
+            let possible_cells = grid
+                .iter()
+                .map(|x| {
+                    i += 1;
+                    (i, x)
+                })
+                .filter(|x| x.1.len() > 1)
+                .collect::<Vec<_>>();
+            let rand_pos = possible_cells[rng.gen_range(0..possible_cells.len())].0 as usize;
+
             if grid[rand_pos].len() == 1 {
                 continue;
             }
@@ -261,7 +216,7 @@ fn wfc() -> String {
             }
         }
 
-        while stack.len() > 0 {
+        while !stack.is_empty() {
             let stack_item = stack.pop_front().unwrap();
             let stack_options_original = grid[stack_item].clone();
             let mut stack_options = grid[stack_item].clone();
@@ -304,9 +259,10 @@ fn wfc() -> String {
                 stack_options.retain(|x| possible_options.contains(x));
             }
 
-            if stack_options.len() == 0 {
+            if stack_options.is_empty() {
                 grid = grid_loop_clone;
-                break 'main;
+                grid_loop_clone_use += 1;
+                continue 'main;
             }
 
             if stack_options == stack_options_original {
@@ -335,16 +291,18 @@ fn wfc() -> String {
     }
 
     let mut row_count = 1;
+    let mut output = "\n".to_string();
+
     for cell in grid {
-        let tile_char = if cell.len() > 0 {
+        let tile_char = if !cell.is_empty() {
             let t_i = (*cell.first().unwrap()) as usize;
             tiles.get(&(t_i as u32)).unwrap().character
         } else {
             '#'
         };
-        output = output + tile_char.to_string().as_str();
+        output += tile_char.to_string().as_str();
         if row_count == GRID_SIZE {
-            output = output + "\n";
+            output += "\n";
             row_count = 1;
         } else {
             row_count += 1;
