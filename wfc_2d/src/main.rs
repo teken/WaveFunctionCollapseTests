@@ -157,15 +157,11 @@ fn wfc() -> String {
         ),
     ]);
 
-    const GRID_SIZE: usize = 38;
+    const GRID_SIZE: usize = 100;
     const TILE_COUNT: usize = 12;
 
-    const EMPTY: Vec<u32> = vec![];
-    let mut grid: [Vec<u32>; GRID_SIZE * GRID_SIZE] = [EMPTY; GRID_SIZE * GRID_SIZE];
-
-    for i in 0..(GRID_SIZE * GRID_SIZE) {
-        grid[i] = (0..TILE_COUNT as u32).collect();
-    }
+    let values = (0..TILE_COUNT as u32).collect::<Vec<_>>();
+    let mut grid = vec![values; GRID_SIZE * GRID_SIZE];
 
     let grid_clone = grid.clone();
     let mut grid_loop_clone;
