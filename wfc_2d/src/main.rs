@@ -268,19 +268,19 @@ fn wfc() -> String {
             grid[stack_item] = stack_options;
 
             // up
-            if stack_item > GRID_SIZE {
+            if stack_item > GRID_SIZE && grid[stack_item - GRID_SIZE].len() > 1 {
                 stack.push_back(stack_item - GRID_SIZE);
             }
             // down
-            if stack_item < GRID_SIZE * (GRID_SIZE - 1) {
+            if stack_item < GRID_SIZE * (GRID_SIZE - 1) && grid[stack_item + GRID_SIZE].len() > 1 {
                 stack.push_back(stack_item + GRID_SIZE);
             }
             // left
-            if stack_item > 0 {
+            if stack_item > 0 && grid[stack_item - 1].len() > 1 {
                 stack.push_back(stack_item - 1);
             }
             // right
-            if stack_item < (GRID_SIZE * GRID_SIZE) - 1 {
+            if stack_item < (GRID_SIZE * GRID_SIZE) - 1 && grid[stack_item + 1].len() > 1 {
                 stack.push_back(stack_item + 1);
             }
         }

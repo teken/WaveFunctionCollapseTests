@@ -1,5 +1,9 @@
 use rand::{self, Rng};
-use std::collections::{HashMap, HashSet, VecDeque};
+use std::{
+    collections::{HashMap, HashSet, VecDeque},
+    fs::File,
+    io::Write,
+};
 
 // 0:║ 1:═ 2:╠ 3:╣ 4:╦ 5:╩ 6:╬ 7:╚ 8:╝ 9:╔ 10:╗ 11:
 
@@ -365,7 +369,12 @@ fn print_grid(grid_size: usize, grid: &Vec<Vec<u32>>, tiles: &HashMap<u32, Tile>
         }
     }
 
-    println!("{}", output);
+    File::create("output.txt")
+        .unwrap()
+        .write_all(output.as_bytes())
+        .unwrap();
+
+    // println!("{}", output);
 }
 
 #[derive(Default)]
