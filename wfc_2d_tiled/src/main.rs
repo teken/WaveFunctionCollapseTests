@@ -369,12 +369,12 @@ fn print_grid(grid_size: usize, grid: &Vec<Vec<u32>>, tiles: &HashMap<u32, Tile>
         }
     }
 
-    File::create("output.txt")
-        .unwrap()
-        .write_all(output.as_bytes())
-        .unwrap();
+    // File::create("output.txt")
+    //     .unwrap()
+    //     .write_all(output.as_bytes())
+    //     .unwrap();
 
-    // println!("{}", output);
+    println!("{}", output);
 }
 
 #[derive(Default)]

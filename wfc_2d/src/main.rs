@@ -168,6 +168,23 @@ fn wfc() -> String {
     let mut grid_loop_clone_use = 0;
     let mut rng = rand::thread_rng();
 
+    // let mut weight_log_weights = vec![0.0; TILE_COUNT];
+    // let mut weights_sum = 0.0;
+    // let mut weight_sum_log_weights = 0.0;
+
+    // for (i, tile) in tiles.iter() {
+    //     weight_log_weights[*i] = tile.weight * tile.weight.log10();
+    //     weights_sum += tile.weight;
+    //     weight_sum_log_weights += weight_log_weights[*i];
+    // }
+
+    // let starting_entropy = (weights_sum * weight_sum_log_weights).log10()
+    //     - (weight_sum_log_weights - weights_sum * weights_sum.log10()) / weights_sum;
+
+    // let mut weights_sums = vec![0.0; GRID_SIZE * GRID_SIZE];
+    // let mut weights_sums_log_weights = vec![0.0; GRID_SIZE * GRID_SIZE];
+    // let mut entropies = vec![0.0; GRID_SIZE * GRID_SIZE];
+
     'main: while grid.iter().any(|x| x.len() > 1) {
         grid_loop_clone = grid.clone();
         if grid_loop_clone_use > 100 {
